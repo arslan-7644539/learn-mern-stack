@@ -14,15 +14,20 @@ app.post("/api/auth/login", (req, res) => {
     `User Loged in succesfuly with this email:${email} and password:${password}`
   );
 
-  if (email === "demo@gmail.com" && password === "1234567") {
+  if (email && password) {
     return res.status(200).send("Login Successfuly");
   } else {
     return res.status(401).send("Invalid Credentials");
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port:${port}`);
-});
-
 ConnectDB()
+  .then(() => {
+    app.listen(port, () => {
+      console.log(`Server is running at port:${port}`);
+    });
+    console.log(` Connected DB`);
+  })
+  .catch((error) => {
+    console.log("MongoDB Connection Error ", error);
+  });
