@@ -1,17 +1,12 @@
-import bodyParser from "body-parser";
 import express from "express";
-import cors from "cors";
+import dotenv from "dotenv";
+import { ConnectDB } from "./src/db/DB.js";
 
-const app = express();
-const port = 3000;
-// -------------------------
-app.use(bodyParser.json());
-app.use(cors());
+dotenv.config();
+export const app = express();
+const port = process.env.PORT || 3000;
+
 // ------------------------
-
-// app.get("/", (req, res) => {
-//   res.send("<h1> Hello Word</h1>");
-// });
 
 app.post("/api/auth/login", (req, res) => {
   const { email, password } = req.body;
@@ -29,3 +24,5 @@ app.post("/api/auth/login", (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port:${port}`);
 });
+
+ConnectDB()
